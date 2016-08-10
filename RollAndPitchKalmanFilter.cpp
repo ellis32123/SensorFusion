@@ -255,6 +255,7 @@ inline void RollAndPitchKalmanFilter::determineAMatrixElementValues(){
               z1       =  gyroscope_sample_z*gyroscope_sample_period*0.5f,
               zp       =  z2_and_0 + z1,
               zn       =  z2_and_0 - z1;
+
 	populateAMatrix(xp,xn,yp,yn,zp,zn);
 }
 
@@ -293,10 +294,16 @@ void RollAndPitchKalmanFilter::predictNextQuaternion(){
 // the function is called by the public void
 // 'updateGyroscopeBasedQuaternion()'
 void RollAndPitchKalmanFilter::findNextPredictionCovariance(){
-	P_next[0] = Q + P[0];
-	P_next[1] = Q + P[1];
-	P_next[2] = Q + P[2];
-	P_next[3] = Q + P[3];
+	//P_next[0] = Q + P[0];
+	//P_next[1] = Q + P[1];
+	//P_next[2] = Q + P[2];
+	//P_next[3] = Q + P[3];
+	P_next[0] = P[0]*P[0] + Q + P[1]*A[0][1]*A[1][0] + P[2]*A[0][2]*A[2][0] + P[3]*A[0][3]*A[3][0];
+	P_next[1] = P[1]*P[1] + Q + P[0]*A[0][1]*A[1][0] + P[2]*A[1][2]*A[2][1] + P[3]*A[1][3]*A[3][1];
+	P_next[2] = P[2]*P[2] + Q + P[0]*A[0][2]*A[2][0] + P[1]*A[1][2]*A[2][1] + P[3]*A[2][3]*A[3][2];
+	P_next[3] = P[3]*P[3] + Q + P[0]*A[0][3]*A[3][0] + P[1]*A[1][3]*A[3][1] + P[2]*A[2][3]*A[3][2];
+ 
+
 }
 
 void RollAndPitchKalmanFilter::computeMeasurementQuaternion(){
@@ -412,11 +419,16 @@ void RollAndPitchKalmanFilter::updateQuaternion(){
 		          (q_measured[1] - q_dot[1]),
 		          (q_measured[2] - q_dot[2]),
 		          (q_measured[3] - q_dot[3]) };
-
+//K[0] = 0.5f;
+//K[1] = 0.5f;
+//K[2] = 0.5f;
+//K[3] = 0.5f;
 	q[0] = q_dot[0] + (K[0]*q_dif[0]);
 	q[1] = q_dot[1] + (K[1]*q_dif[1]);
 	q[2] = q_dot[2] + (K[2]*q_dif[2]);
 	q[3] = q_dot[3] + (K[3]*q_dif[3]);
+
+
 }
 
 // this function updates the predicted covariance matrix 'P'
@@ -425,10 +437,10 @@ void RollAndPitchKalmanFilter::updateQuaternion(){
 // - 'updateGyroscopeBasedQuaternion()' 
 // - 'updateAccelerometerBasedQuaternion()'
 void RollAndPitchKalmanFilter::updatePMatrix(){
-	P[0] = - P_next[0]*(K[0] - 1);
-	P[1] = - P_next[1]*(K[1] - 1);
-	P[2] = - P_next[2]*(K[2] - 1);
-	P[3] = - P_next[3]*(K[3] - 1);
+	P[0] = - P_next[0]*(K[0] - 1.0f);
+	P[1] = - P_next[1]*(K[1] - 1.0f);
+	P[2] = - P_next[2]*(K[2] - 1.0f);
+	P[3] = - P_next[3]*(K[3] - 1.0f);
 }
  
 // this function takes the pointer to a quaternion
