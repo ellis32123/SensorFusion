@@ -5,6 +5,11 @@
 // determine orientation
 // the 4d kalman filter is quaternion based
 // it also includes an ASGD algorithm for improved dynamic performance 
+//
+// the gyroscope samples provide the predictiions 
+// through integration -- leads to long term drift 
+// therefore this must be compensated for in the long term
+// using an accelerometer based quaternion
 
 
 #include "RollAndPitchKalmanFilter.h"
