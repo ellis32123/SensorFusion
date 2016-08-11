@@ -403,12 +403,6 @@ void SensorFusion::takeAltimeterSamples(){
 }
 
 /*********************************************************************************
-			REMOVE SENSOR OFFSETS		
-*********************************************************************************/
-
-	//TODO
-
-/*********************************************************************************
 			INITIALIZE KALMAN FILTERS	
 *********************************************************************************/
 
@@ -470,12 +464,54 @@ void SensorFusion::update(){
 	// the function checks this bit and if true,
 	// updates the current sample for each sensor
 	updateCurrentSensorData();
+	//function removes bias from sensor readings
+	// bias values are determined in the initialization
+	// phase assuming that the vehicle is kept level and stationary
+	// offset value = mean when stationary and level
+	removeSensorOffsets();
 	// function updates all kalman filters based on what 
 	// new sensor data is available. 
 	updateKalmanFilters();
 	// checks to see if new gyroscope data is available
 
 
+}
+
+/*********************************************************************************
+			REMOVE SENSOR OFFSETS		
+*********************************************************************************/
+
+//function removes bias from sensor readings
+// bias values are determined in the initialization
+// phase assuming that the vehicle is kept level and stationary
+// offset value = mean when stationary and level
+void SensorFusion::removeSensorOffsets(){
+	removeGyroscopeOffsets();
+	removeAccelerometerOffsets();
+	removeMagnetometerOffsets();
+	removeAltimeterOffsets();
+}
+
+inline void SensorFusion::removeGyroscopeOffsets(){
+	gyroscope_raw_data.gyroscope_raw_x -= gyroscope_sensor_characteristics.mean_x;
+	gyroscope_raw_data.gyroscope_raw_y -= gyroscope_sensor_characteristics.mean_y;
+	gyroscope_raw_data.gyroscope_raw_z -= gyroscope_sensor_characteristics.mean_z;
+}
+
+inline void SensorFusion::removeAccelerometerOffsets(){
+	accelerometer_raw_data.accelerometer_raw_x -= accelerometer_sensor_characteristics.mean_x;
+	accelerometer_raw_data.accelerometer_raw_y -= accelerometer_sensor_characteristics.mean_y;
+	accelerometer_raw_data.accelerometer_raw_z -= accelerometer_sensor_characteristics.mean_z;
+}
+
+inline void SensorFusion::removeMagnetometerOffsets(){
+	magnetometer_raw_data.magnetometer_raw_x -= magnetometer_sensor_characteristics.mean_x;
+	magnetometer_raw_data.magnetometer_raw_y -= magnetometer_sensor_characteristics.mean_y;
+	magnetometer_raw_data.magnetometer_raw_z -= magnetometer_sensor_characteristics.mean_z;
+}
+
+inline void SensorFusion::removeAltimeterOffsets(){
+	altimeter_raw_data.altimeter_raw_z -= altimeter_sensor_characteristics.mean_z;
 }
 
 // function updates all kalman filters based on what 

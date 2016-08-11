@@ -257,11 +257,17 @@ class SensorFusion{
 		inline void createKalmanFilterClassObjects();
 		inline void defineKalmanFilterParameters();
 
-		       void updateKalmanFilters();
+		       void removeSensorOffsets();
+		inline void removeGyroscopeOffsets();
+		inline void removeAccelerometerOffsets();
+		inline void removeMagnetometerOffsets();
+		inline void removeAltimeterOffsets();
+
+ 		       void updateKalmanFilters();
 		inline void updateRollAndPitchKalmanFilterSamples();
 		inline void updateRollAndPitchKalmanFilterGyroscopeSamples();
 		inline void updateRollAndPitchKalmanFilterAccelerometerSamples();
-		       void extractRollAndPitchKalmanFilterParameters();
+	       	       void extractRollAndPitchKalmanFilterParameters();
 	        inline void extractRollAndPitchQuaternion();	
 	        inline void extractRollAndPitchPredictedQuaternion();
 	        inline void extractRollAndPitchMeasuredQuaternion();
