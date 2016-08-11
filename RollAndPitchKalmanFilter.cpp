@@ -92,14 +92,6 @@ inline void RollAndPitchKalmanFilter::initializeModelParameters(){
 	Serial.println(" HELLOO !!!!!!!!!!!!!!");
 	Serial.println(" HELLOO !!!!!!!!!!!!!!");
 	Serial.println(" HELLOO !!!!!!!!!!!!!!");
-	Serial.println(q[0]);
-	Serial.println(q[1]);
-	Serial.println(q[2]);
-	Serial.println(q[3]);
-	Serial.println(q_dot[0]);
-	Serial.println(q_dot[1]);
-	Serial.println(q_dot[2]);
-	Serial.println(q_dot[3]);
 	delay(1000);
 }
 
@@ -159,6 +151,10 @@ inline void RollAndPitchKalmanFilter::initializeAMatrix(){
 // this public function updates the state estimate when new 
 // gyroscope and acclerometer data is available
 void RollAndPitchKalmanFilter::update(){
+
+	Serial.print(sample_period_current,3);
+	Serial.print(" , ");
+	float sum_of_squares; 
 	updateTimeData();
 	findGyroscopeSampleSize();
 	updateStepSize();
@@ -302,8 +298,6 @@ void RollAndPitchKalmanFilter::findNextPredictionCovariance(){
 	P_next[1] = P[1]*P[1] + Q + P[0]*A[0][1]*A[1][0] + P[2]*A[1][2]*A[2][1] + P[3]*A[1][3]*A[3][1];
 	P_next[2] = P[2]*P[2] + Q + P[0]*A[0][2]*A[2][0] + P[1]*A[1][2]*A[2][1] + P[3]*A[2][3]*A[3][2];
 	P_next[3] = P[3]*P[3] + Q + P[0]*A[0][3]*A[3][0] + P[1]*A[1][3]*A[3][1] + P[2]*A[2][3]*A[3][2];
- 
-
 }
 
 void RollAndPitchKalmanFilter::computeMeasurementQuaternion(){
@@ -402,11 +396,12 @@ void RollAndPitchKalmanFilter::findKalmanGain(){
 	store[1] = P_next[1] + R;
 	store[2] = P_next[2] + R;
 	store[3] = P_next[3] + R;
-	
+
 	K[0] = P_next[0]/store[0];
 	K[1] = P_next[1]/store[1];
 	K[2] = P_next[2]/store[2];
 	K[3] = P_next[3]/store[3];
+
 }
 
 // this function computes the new quaternion state estimate
@@ -423,11 +418,16 @@ void RollAndPitchKalmanFilter::updateQuaternion(){
 //K[1] = 0.5f;
 //K[2] = 0.5f;
 //K[3] = 0.5f;
-	q[0] = q_dot[0] + (K[0]*q_dif[0]);
-	q[1] = q_dot[1] + (K[1]*q_dif[1]);
-	q[2] = q_dot[2] + (K[2]*q_dif[2]);
-	q[3] = q_dot[3] + (K[3]*q_dif[3]);
 
+	q[0] = (K[0]*q_dif[0]);
+	q[1] = (K[1]*q_dif[1]);
+	q[2] = (K[2]*q_dif[2]);
+	q[3] = (K[3]*q_dif[3]);
+
+	q[0] += q_dot[0];
+	q[1] += q_dot[1];
+	q[2] += q_dot[2];
+	q[3] += q_dot[3];
 
 }
 

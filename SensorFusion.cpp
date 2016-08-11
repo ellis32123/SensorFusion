@@ -380,6 +380,7 @@ void SensorFusion::takeGyroscopeSamples(){
 	float gyroVals[3],
 	      to_radians = PI/180.0f;
 	gyroscope.readGyro(&gyroVals[0],&gyroVals[1],&gyroVals[2]);
+	delay(5);
 	gyroscope_raw_data.gyroscope_raw_x = gyroVals[0]*to_radians;
 	gyroscope_raw_data.gyroscope_raw_y = gyroVals[1]*to_radians;
 	gyroscope_raw_data.gyroscope_raw_z = gyroVals[2]*to_radians;
@@ -387,6 +388,7 @@ void SensorFusion::takeGyroscopeSamples(){
 
 void SensorFusion::takeAccelerometerSamples(){
 	accelerometer.readGValues();
+	delay(5);
 	accelerometer_raw_data.accelerometer_raw_x = accelerometer.g_values.g_x;
 	accelerometer_raw_data.accelerometer_raw_y = accelerometer.g_values.g_y;
 	accelerometer_raw_data.accelerometer_raw_z = accelerometer.g_values.g_z;
