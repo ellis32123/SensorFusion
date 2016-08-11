@@ -126,11 +126,6 @@ struct SensorCharacteristics{
  *
  *-----------------------------------------------------------------------*/
 
-struct EulerAngles{
-	float pitch = 0.0f,
-	      roll  = 0.0f,
-	      yaw   = 0.0f;
-};
 
 struct Quaternion{
 	float q0  = 1.0f,
@@ -272,6 +267,7 @@ class SensorFusion{
 	        inline void extractRollAndPitchPredictedQuaternion();
 	        inline void extractRollAndPitchMeasuredQuaternion();
 
+		       void convertQuaternionToEulerAngles(float *quaternion);
 
 		       
 		       uint8_t		interrupt_byte 			  	 = 0x00;

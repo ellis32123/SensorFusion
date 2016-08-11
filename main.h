@@ -8,7 +8,16 @@
 
 #include <SensorFusion.h>
 
+struct EulerAngles{
+	float roll  = 0.0f,
+	      pitch = 0.0f,
+	      yaw   = 0.0f;
+};
+
 void initialize();
+
+EulerAngles convertQuaternionToEulerAngles(float q0,float q1,float q2,float q3);
+
 void sPrintInitializationData(int dps);
 
 inline void sPrintRawGyroscope(int dps);
@@ -34,6 +43,8 @@ inline void sPrintRollAndPitchPMatrix(int dps);
 inline void sPrintRollAndPitchPNext(int dps);
 inline void sPrintRollAndPitchKalmanGain(int dps);
 inline void sPrintRollAndPitchAMatrix(int dps);
+
+inline void sPrintRollAndPitchEulerAngles(int dps);
 
 SensorFusion sensor_fusion;
 

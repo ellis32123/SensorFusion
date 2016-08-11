@@ -589,6 +589,7 @@ inline void SensorFusion::extractRollAndPitchMeasuredQuaternion(){
 	roll_and_pitch_measured_quaternion.q3 = roll_and_pitch_kalman_filter.getQMeasured3();
 }
 
+
 /*********************************************************************************
 				GETTERS
 *********************************************************************************/

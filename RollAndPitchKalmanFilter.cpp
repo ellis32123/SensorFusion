@@ -56,43 +56,6 @@ inline void RollAndPitchKalmanFilter::initializeModelParameters(){
 	definePMatrix();
 	initializeQuaternions();
 	initializeAMatrix();
-	Serial.println(" HELLOO !!!!!!!!!!!!!!");
-	Serial.println(" HELLOO !!!!!!!!!!!!!!");
-	Serial.println(" HELLOO !!!!!!!!!!!!!!");
-	Serial.println(" HELLOO !!!!!!!!!!!!!!");
-	Serial.println(" HELLOO !!!!!!!!!!!!!!");
-	Serial.println(" HELLOO !!!!!!!!!!!!!!");
-	Serial.println(" HELLOO !!!!!!!!!!!!!!");
-	Serial.println(" HELLOO !!!!!!!!!!!!!!");
-	Serial.println(" HELLOO !!!!!!!!!!!!!!");
-	Serial.println(" HELLOO !!!!!!!!!!!!!!");
-	Serial.println(" HELLOO !!!!!!!!!!!!!!");
-	Serial.println(" HELLOO !!!!!!!!!!!!!!");
-	Serial.println(" HELLOO !!!!!!!!!!!!!!");
-	Serial.println(" HELLOO !!!!!!!!!!!!!!");
-	Serial.println(" HELLOO !!!!!!!!!!!!!!");
-	Serial.println(" HELLOO !!!!!!!!!!!!!!");
-	Serial.println(" HELLOO !!!!!!!!!!!!!!");
-	Serial.println(" HELLOO !!!!!!!!!!!!!!");
-	Serial.println(" HELLOO !!!!!!!!!!!!!!");
-	Serial.println(" HELLOO !!!!!!!!!!!!!!");
-	Serial.println(" HELLOO !!!!!!!!!!!!!!");
-	Serial.println(" HELLOO !!!!!!!!!!!!!!");
-	Serial.println(" HELLOO !!!!!!!!!!!!!!");
-	Serial.println(" HELLOO !!!!!!!!!!!!!!");
-	Serial.println(" HELLOO !!!!!!!!!!!!!!");
-	Serial.println(" HELLOO !!!!!!!!!!!!!!");
-	Serial.println(" HELLOO !!!!!!!!!!!!!!");
-	Serial.println(" HELLOO !!!!!!!!!!!!!!");
-	Serial.println(" HELLOO !!!!!!!!!!!!!!");
-	Serial.println(" HELLOO !!!!!!!!!!!!!!");
-	Serial.println(" HELLOO !!!!!!!!!!!!!!");
-	Serial.println(" HELLOO !!!!!!!!!!!!!!");
-	Serial.println(" HELLOO !!!!!!!!!!!!!!");
-	Serial.println(" HELLOO !!!!!!!!!!!!!!");
-	Serial.println(" HELLOO !!!!!!!!!!!!!!");
-	Serial.println(" HELLOO !!!!!!!!!!!!!!");
-	delay(1000);
 }
 
 // this function defines the process noise covariance matrix
