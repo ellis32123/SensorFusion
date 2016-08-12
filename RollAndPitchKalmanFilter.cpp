@@ -114,15 +114,9 @@ inline void RollAndPitchKalmanFilter::initializeAMatrix(){
 // this public function updates the state estimate when new 
 // gyroscope and acclerometer data is available
 void RollAndPitchKalmanFilter::update(){
-
-	Serial.print(sample_period_current,3);
-	Serial.print(" , ");
-	float sum_of_squares; 
 	updateTimeData();
 	findGyroscopeSampleSize();
 	updateStepSize();
-//	normalizeQuaternion(q);                  // normalize at start to ensure unit quaternion
-
 	determineAMatrix();
 	predictNextQuaternion();
 	normalizeQuaternion(q_dot);
