@@ -14,17 +14,11 @@ struct EulerAngles{
 	      yaw   = 0.0f;
 };
 
-	void initialize();
-	void initializeTimeData();
+void initialize();
 
-	void updateTimeData();
+EulerAngles convertQuaternionToEulerAngles(float q0,float q1,float q2,float q3);
 
-      EulerAngles convertQuaternionToEulerAngles(float q0,float q1,float q2,float q3);
-
-      void sPrintInitializationData(int dps);
-
-inline void sPrintRunTime(int dps);
-inline void sPrintSamplePeriod(int dps);
+void sPrintInitializationData(int dps);
 
 inline void sPrintRawGyroscope(int dps);
 inline void sPrintRawAccelerometer(int dps);
@@ -51,12 +45,6 @@ inline void sPrintRollAndPitchKalmanGain(int dps);
 inline void sPrintRollAndPitchAMatrix(int dps);
 
 inline void sPrintRollAndPitchEulerAngles(int dps);
-
-	 float sample_period  = 0.0f,
-	       run_time       = 0.0f;
-unsigned long current_millis  = 0.0f,
-	      previous_millis = 0.0f,
-	      start_millis    = 0.0f;
 
 SensorFusion sensor_fusion;
 
