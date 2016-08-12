@@ -11,17 +11,6 @@
 // 2) yaw compensation 	   	  --> using a magnetometer,
 // 3) n-frame states estimation   --> using altimeter/GPS samples
 //
-
-
-
-
-
-
-
-
-
-
-
 //			 REQUIREMENTS
 //
 // 			INPUTS
