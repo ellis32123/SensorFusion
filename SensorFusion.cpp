@@ -46,8 +46,7 @@
 #include "SensorFusion.h"
 
 SensorFusion::SensorFusion(){
-//	initializeSensors();
-//	initializeKalmanFilters();
+
 }
 
 
