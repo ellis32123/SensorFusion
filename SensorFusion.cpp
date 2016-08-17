@@ -346,6 +346,8 @@ void SensorFusion::checkInterrupts(){
 	interrupt_byte = 0x00;			// reset interrupt byte from last loop
 	interrupt_byte |= (gyroscope.isRawDataReady()     << GYROSCOPE_INTERRUPT_BYTE_BIT);// & 1;
 	interrupt_byte |= (accelerometer.getIsDataReady() << ACCELEROMETER_INTERRUPT_BYTE_BIT);// & 1;
+	interrupt_byte |= (magnetometer.getIsDataReady() << MAGNETOMETER_INTERRUPT_BYTE_BIT);// & 1;
+
 	//	TODO
 }
 
@@ -393,8 +395,11 @@ void SensorFusion::takeAccelerometerSamples(){
 }
 
 void SensorFusion::takeMagnetometerSamples(){
-
-}
+	magnetometer.readGaussValues();
+	magnetometer_raw_data.magnetometer_raw_x = magnetometer.gauss_values.gauss_x;  
+	magnetometer_raw_data.magnetometer_raw_y = magnetometer.gauss_values.gauss_y;  
+	magnetometer_raw_data.magnetometer_raw_z = magnetometer.gauss_values.gauss_z;  
+} 
 
 void SensorFusion::takeAltimeterSamples(){
 
