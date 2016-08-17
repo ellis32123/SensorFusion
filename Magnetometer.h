@@ -26,6 +26,7 @@
 #define GAIN                  0x00 // +/-0.88Ga resolution = 4.35 (mG/LSB)
 ///// DEFINE OPERATIN MODE - MODE_REG ////////////////
 #define CONTINUOUS_MODE       0x00 // sample continuously
+#define SINGLE_MEASURE_MODE   0x00 // wait until data rdy is read before sampling again
 #define IDLE_MODE             0x03 // idle device
 
 #define INITIALIZATION_TIMEOUT 1000000  //try to connect for 1 second before giving up
@@ -49,42 +50,45 @@ struct Gauss_Values{
             gauss_z;
 };
 
-class Magnetometer
-{
-    public:
-        Magnetometer();
-        Raw_Magnetometer     readRawData();
-        Gauss_Values         readGaussValues();
-        void initialize();
-        void         turnMagnetometerOn();
-        void         turnMagnetometerOff();
-        void         printRawData();
-        void         printRawX();
-        void         printRawY();
-        void         printRawZ();
-        void         printGaussValues();
-        void         printGaussValuesX();
-        void         printGaussValuesY();
-        void         printGaussValuesZ();
-        float        resolution;
-        long         turnOnMicros       = 0,
-                     microsSinceTurnOn  = 0;
+class Magnetometer{
 
-        Raw_Magnetometer raw_data     = Raw_Magnetometer();
-        Gauss_Values     gauss_values = Gauss_Values();
-    protected:
-        void     Write(int address, int data);
-        uint8_t* Read (int address, int numberOfBytes);
+	public:
+	    Magnetometer();
+	    Raw_Magnetometer     readRawData();
+	    Gauss_Values         readGaussValues();
 
-    private:
-        void defineOutputRate();
-        void defineGain();
-        void defineResolution();
-        void tryInitialConnection();
+	    void initialize();
+	    bool 	 getIsDataReady();
+	    void         turnMagnetometerOn();
+	    void         turnMagnetometerOff();
+	    void         printRawData();
+	    void         printRawX();
+	    void         printRawY();
+	    void         printRawZ();
+	    void         printGaussValues();
+	    void         printGaussValuesX();
+	    void         printGaussValuesY();
+	    void         printGaussValuesZ();
+	    float        resolution;
+	    long         turnOnMicros       = 0,
+			 microsSinceTurnOn  = 0;
 
-        float resolutionsArray [8] = {0.73,0.92,1.22,1.52,2.27,2.56,3.03,4.35}; // mG/LSB
-        long  currentMicros  = 0,
-              previousMicros = 0;
+	    Raw_Magnetometer raw_data     = Raw_Magnetometer();
+	    Gauss_Values     gauss_values = Gauss_Values();
+
+	protected:
+	    void     Write(int address, int data);
+	    uint8_t* Read (int address, int numberOfBytes);
+
+	private:
+	    void defineOutputRate();
+	    void defineGain();
+	    void defineResolution();
+	    void tryInitialConnection();
+
+	    float resolutionsArray [8] = {0.73,0.92,1.22,1.52,2.27,2.56,3.03,4.35}; // mG/LSB
+	    long  currentMicros  = 0,
+		  previousMicros = 0;
 };
 
 #endif // Magnetometer_h

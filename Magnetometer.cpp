@@ -2,8 +2,7 @@
 #include <Arduino.h>
 #include <Wire.h>
 
-Magnetometer::Magnetometer()
-{
+Magnetometer::Magnetometer(){
 
 }
 
@@ -23,8 +22,9 @@ void Magnetometer::defineGain(){
 }
 
 void Magnetometer::turnMagnetometerOn(){
-    Write(MODE_REG, CONTINUOUS_MODE);
-    turnOnMicros = micros();
+	// change to CONTINUOUS_MODE if not using interrupts
+    	Write(MODE_REG, SINGLE_MEASURE_MODE);
+	turnOnMicros = micros();
 }
 
 void Magnetometer::turnMagnetometerOff(){
@@ -95,6 +95,13 @@ void Magnetometer::defineResolution(){
     }
 }
 
+bool Magnetometer::getIsDataReady(){
+	uint8_t* status_reg_byte = Read(STATUS_REG ,1);
+	    	Write(MODE_REG, SINGLE_MEASURE_MODE);
+	uint8_t data = status_reg_byte[0];
+	return  data & 0x01; // no shift required as lsb 
+}
+
 void Magnetometer::Write(int address, int data){
     Wire.beginTransmission(MAGNETOMETER_ADDRESS);
     Wire.write(address);
@@ -119,6 +126,10 @@ uint8_t* Magnetometer::Read(int address, int numberOfBytes){
     Wire.endTransmission();
     return dataBuffer;
 }
+
+/***********************************************************************************************
+				PRINT FUNCTIONS
+***********************************************************************************************/
 
 void Magnetometer::printRawData(){
     readRawData();
@@ -164,3 +175,4 @@ void Magnetometer::printGaussValuesZ(){
     Serial.print(gauss_values.gauss_z);
 }
 
+// end of file -- Magnetometer.cpp
